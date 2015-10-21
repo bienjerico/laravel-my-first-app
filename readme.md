@@ -1,3 +1,7 @@
+## My First App
+Its has two module, Employees module used basic laravel CRUD with Validator and Project module design like a single page application also has a Validator it used Jquery Post for CRUD.
+
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
