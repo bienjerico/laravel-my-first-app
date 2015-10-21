@@ -34,7 +34,7 @@
 
 //get('employee',['as' => 'employee','uses' => 'EmployeeController@index']);
 //get('employee/{id}',['as' => 'employeedetail','uses' => 'EmployeeController@index']);
-Route::resource('employee','EmployeeController',
+Route::resource('employees','EmployeeController',
         ['names' => 
             [
                 'index' => 'employee',
@@ -49,6 +49,24 @@ Route::resource('employee','EmployeeController',
         ]);
 
 
-Route::get('project/views/create',['as' => 'projectviewcreate',
+
+
+Route::post('projects/views/create',['as' => 'projectsviewcreate',
                                    'uses' => 'ProjectsController@create']);
-Route::resource('projects','ProjectsController');
+Route::post('projects/views/edit',['as' => 'projectsviewedit',
+                                   'uses' => 'ProjectsController@edit']);
+Route::post('projects/views/predestroy',['as' => 'projectsviewpredestroy',
+                                   'uses' => 'ProjectsController@predestroy']);
+Route::post('projects/views/projectlist',['as' => 'projectsviewlist',
+                                   'uses' => 'ProjectsController@projectlist']);
+
+Route::get('projects',['as' => 'projects',
+                        'uses' => 'ProjectsController@index']);
+Route::post('projects/store',['as' => 'projectsstore',
+                        'uses' => 'ProjectsController@store']);
+Route::post('projects/update/{id}',['as' => 'projectsupdate',
+                        'uses' => 'ProjectsController@update']);
+Route::post('projects/destory/{id}',['as' => 'projectsdestroy',
+                        'uses' => 'ProjectsController@destroy']);
+
+

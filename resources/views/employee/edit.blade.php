@@ -5,6 +5,12 @@
 @stop
 
 @section('content')
+    
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
        
     <div class='text-center'>
         <h2>{{ $employee->emp_firstname.' '.$employee->emp_middlename.' '.$employee->emp_lastname }}</h2>

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\EmployeeRequest;
 use App\Http\Controllers\Controller;
+use Validator;
 use App\Employee;
+use App\Projects;
 
 class EmployeeController extends Controller
 {
@@ -25,11 +27,16 @@ class EmployeeController extends Controller
      */
     public function index()
     {
+        
+        $empactive =  "class=active";
+        
         $title = 'Employees Page';
         $cnt = 1;
         $employee = $this->employee->get();
+        $projects = Projects::get();
 
-        return view('employee.index', compact('title','employee','cnt'));
+
+        return view('employee.index', compact('title','employee','cnt','projects','empactive'));
         
     }
 
@@ -41,8 +48,9 @@ class EmployeeController extends Controller
     public function create()
     {
         
+        $empactive =  "class=active";
         $title = "Create | Employees Page";
-        return view('employee.create',compact('title'));
+        return view('employee.create',compact('title','empactive'));
     }
 
     /**
@@ -51,12 +59,19 @@ class EmployeeController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(EmployeeRequest $request)
+    public function store(Request $request)
     {
+
+        Validator::make($request->all(),[
+            'emp_firstname' => 'required',
+            'emp_middlename' => 'required',
+            'emp_lastname' => 'required',
+            'emp_gender' => 'required',
+            'emp_email' => 'required|email']);
         $employee = $this->employee;
         $employee->create($request->all());
         
-        return redirect('employee');
+        return redirect('employee')->with('status', 'Successfully Created.');
     }
 
     /**
@@ -68,12 +83,13 @@ class EmployeeController extends Controller
     public function show($id)
     {
         
+        $empactive =  "class=active";
         $employee = $this->employee->where('emp_id', '=', $id)->first();
         
         $name = $employee->emp_firstname.' '.$employee->emp_middlename.' '.$employee->emp_lastname;
         $title = $name.' | Employees Page';
         
-        return view('employee.show',  compact('title','employee'));
+        return view('employee.show',  compact('title','employee','empactive'));
         
     }
 
@@ -85,12 +101,14 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
+        $empactive =  "class=active";
+
         $employee = $this->employee->where('emp_id', '=', $id)->first();
         
         $name = $employee->emp_firstname.' '.$employee->emp_middlename.' '.$employee->emp_lastname;
         $title = 'Edit | '.$name.' | Employees Page';
         
-        return view('employee.edit',  compact('title','employee'));
+        return view('employee.edit',  compact('title','employee','empactive'));
     }
 
     /**
@@ -107,7 +125,7 @@ class EmployeeController extends Controller
          
         $employee->fill($request->input())->save();
         
-        return redirect('employee/'.$employee->emp_id.'/edit');
+        return redirect('employee/'.$employee->emp_id.'/edit')->with('status','Successfully Updated.');
      
     }
 
@@ -122,6 +140,6 @@ class EmployeeController extends Controller
         $employee = $this->employee->where('emp_id', '=', $id)->first();
         $employee->delete();
         
-        return redirect('employee');
+        return redirect('employee')->with('status', 'Successfully Deleted.');
     }
 }

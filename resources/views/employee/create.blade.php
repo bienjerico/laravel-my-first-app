@@ -13,7 +13,7 @@
     
     <div class="clearfix">&nbsp;</div>
 
-    {!! Form::open(['route' => 'employeestore']) !!}
+    {!! Form::open(['route' => 'employeestore','files'=>true]) !!}
 
     <div class="row form-group">
         <div class="col-md-4 {{ $errors->has('emp_firstname') ? 'has-error' : '' }}"> 
@@ -44,8 +44,15 @@
             {!! Form::text('emp_email',null,['class' => 'form-control']) !!}
             {!! $errors->first('emp_email','<span class="text-danger">:message</span>') !!}
         </div>
+    
+
         <div class="col-md-4"> &nbsp; </div>
     </div>
+
+     <div class="row form-group">
+     	<div class="col-md-4"></div>
+     </div>
+
 
     <div class='clearfix'>&nbsp;</div>
     

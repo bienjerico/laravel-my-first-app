@@ -6,11 +6,17 @@
 
 @section('content')
     
-    <div class='clearfix'>&nbsp;</div>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    <br/>
 
     <div class='text-right'><a href="{{ route('employeecreate') }}" class='btn btn-success btn-lg'>New Employee</a></div>
     
-    <div class='clearfix'>&nbsp;</div>
+    <br/>
     
     <div class='table-responsive'>
         <table class="table table-hover table-bordered">
@@ -44,6 +50,7 @@
                 
         </table>
     </div>
+
 @stop
 
 

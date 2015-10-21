@@ -1,45 +1,40 @@
-
-    
-
     <div id='result-message'></div>
      
     <div class="input-group">
         {!! Form::label('title','Title:') !!}
-        {!! Form::text('title',null,['class' => 'form-control']) !!}
+        {!! Form::text('title',$projects->title ,['class' => 'form-control']) !!}
     </div>
     <div class="clearfix">&nbsp;</div>
 
     <div class="input-group">
         {!! Form::label('description','Description:') !!}
-        {!! Form::textarea('description',null,['class' => 'form-control']) !!}
+        {!! Form::textarea('description',$projects->description,['class' => 'form-control']) !!}
     </div>
     
     <div class="clearfix">&nbsp;</div>
-    {!! Form::button('Create', array('class' => 'btn btn-primary','id' => 'create-btn')) !!}
+    
+    <button type="button" class="btn btn-primary" id="update-btn" onclick="updateproject('{{ $projects->id }}')">Update</button>
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-
-
-
-<script>
-        $("#create-btn").click(function(){
+    
+    
+    <script>
+       function updateproject(id){
  
-            var url =  "{{ route('projectsstore') }}",
+            var url =  "{{ route('projectsupdate',$projects->id) }}",
                 data = {},
                 title = $("#title"),
                 description = $("#description"),
                 message = "";
 
+                data['id']  = id;
                 data['title'] = title.val();
                 data['description'] = description.val();
+          
 
                 $.post(url, data, function(result){
                     
                         message += "<div class='alert alert-success'>"+result+"</div>";
                          $("#result-message").html(message);
-                         $.each( data, function( key, value ) {
-                            $("#"+key).val("");
-                        });
                         
                         result_projects();
                         
@@ -55,5 +50,5 @@
                 });
                 
                 
-        });
+        };
 </script> 
